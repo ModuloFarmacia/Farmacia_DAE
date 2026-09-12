@@ -26,6 +26,7 @@ public class Medicamento {
 
     private boolean estado = true;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "medicamento")
     private List<Presentacion> presentaciones;
 
