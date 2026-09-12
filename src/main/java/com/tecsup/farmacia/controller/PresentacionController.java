@@ -30,8 +30,16 @@ public class PresentacionController {
     }
 
     @PostMapping
-    public Presentacion guardar(@RequestBody Presentacion presentacion) {
-        return presentacionService.guardar(presentacion);
+    public ResponseEntity<?> guardar(@RequestBody Presentacion presentacion) {
+
+        Presentacion nueva = presentacionService.guardar(presentacion);
+
+        if (nueva == null) {
+            return ResponseEntity.badRequest()
+                    .body("El medicamento indicado no existe");
+        }
+
+        return ResponseEntity.ok(nueva);
     }
 
     @PutMapping("/{id}")
