@@ -1,9 +1,7 @@
 package com.tecsup.farmacia.entity;
 
 import jakarta.persistence.*;
-
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -21,74 +19,54 @@ public class Medicamento {
     private String nombreComercial;
 
     private String concentracion;
-
     private String formaFarmaceutica;
-
     private boolean estado = true;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "laboratorio_id")
+    private Laboratorio laboratorio;
+
     @JsonIgnore
-    @OneToMany(mappedBy = "medicamento")
+    @OneToMany(mappedBy = "medicamento", cascade = CascadeType.ALL)
     private List<Presentacion> presentaciones;
 
-    public List<Presentacion> getPresentaciones() {
-        return presentaciones;
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "medicamento", cascade = CascadeType.ALL)
+    private List<Lote> lotes;
 
-    public void setPresentaciones(List<Presentacion> presentaciones) {
-        this.presentaciones = presentaciones;
-    }
+    public Medicamento() {}
 
-    // Constructor vacío requerido por JPA
-    public Medicamento() {
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    // Getters y setters
+    public String getCodigo() { return codigo; }
+    public void setCodigo(String codigo) { this.codigo = codigo; }
 
-    public Long getId() {
-        return id;
-    }
+    public String getNombreComercial() { return nombreComercial; }
+    public void setNombreComercial(String nombreComercial) { this.nombreComercial = nombreComercial; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getConcentracion() { return concentracion; }
+    public void setConcentracion(String concentracion) { this.concentracion = concentracion; }
 
-    public String getCodigo() {
-        return codigo;
-    }
+    public String getFormaFarmaceutica() { return formaFarmaceutica; }
+    public void setFormaFarmaceutica(String formaFarmaceutica) { this.formaFarmaceutica = formaFarmaceutica; }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
+    public boolean isEstado() { return estado; }
+    public void setEstado(boolean estado) { this.estado = estado; }
 
-    public String getNombreComercial() {
-        return nombreComercial;
-    }
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 
-    public void setNombreComercial(String nombreComercial) {
-        this.nombreComercial = nombreComercial;
-    }
+    public Laboratorio getLaboratorio() { return laboratorio; }
+    public void setLaboratorio(Laboratorio laboratorio) { this.laboratorio = laboratorio; }
 
-    public String getConcentracion() {
-        return concentracion;
-    }
+    public List<Presentacion> getPresentaciones() { return presentaciones; }
+    public void setPresentaciones(List<Presentacion> presentaciones) { this.presentaciones = presentaciones; }
 
-    public void setConcentracion(String concentracion) {
-        this.concentracion = concentracion;
-    }
-
-    public String getFormaFarmaceutica() {
-        return formaFarmaceutica;
-    }
-
-    public void setFormaFarmaceutica(String formaFarmaceutica) {
-        this.formaFarmaceutica = formaFarmaceutica;
-    }
-
-    public boolean isEstado() {
-        return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
+    public List<Lote> getLotes() { return lotes; }
+    public void setLotes(List<Lote> lotes) { this.lotes = lotes; }
 }

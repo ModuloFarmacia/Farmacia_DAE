@@ -1,6 +1,7 @@
 package com.tecsup.farmacia.entity;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -18,12 +19,15 @@ public class Lote {
     @Column(nullable = false, unique = true)
     private String numeroLote;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
-    private LocalDate fechaVencimiento; // RF-FAR-12
+    private LocalDate fechaVencimiento;
 
     private Integer cantidad;
     private Double costoUnitario;
     private String proveedor;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaIngreso = LocalDate.now();
 
     public Lote() {
